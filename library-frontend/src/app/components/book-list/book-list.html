@@ -1,5 +1,9 @@
 <div class="card">
-  <h2>Books List</h2>
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+    <h2>Books List</h2>
+    <a routerLink="/books/create" class="btn-add">+ Add Book</a>
+  </div>
+
   <table>
     <thead>
       <tr>
@@ -7,18 +11,20 @@
         <th>ISBN</th>
         <th>Author</th>
         <th>Year</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let book of books">
-  <td>{{ book.title }}</td>
-  <td>{{ book.isbn }}</td>
-  <td>{{ book.author?.name }}</td>
-  <td>{{ book.published_year }}</td>
-  <td>
-    <button (click)="deleteBook(book.id)" class="btn-delete">Delete</button>
-  </td>
-</tr>
+        <td>{{ book.title }}</td>
+        <td>{{ book.isbn }}</td>
+        <td>{{ book.author?.name }}</td>
+        <td>{{ book.published_year }}</td>
+        <td>
+          <a [routerLink]="['/books/edit', book.id]" class="btn-edit">Edit</a>
+          <button (click)="deleteBook(book.id)" class="btn-delete">Delete</button>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>

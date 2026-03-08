@@ -12,16 +12,17 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::with('author')->get();
-        return BookResource::collection($books);
+        return response()->json([
+            'data' => Book::with('author')->get(),
+        ]);
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'author_id'      => 'required|exists:authors,id',
-            'title'          => 'required|string|max:255',
-            'isbn'           => 'required|string|unique:books,isbn',
+            'author_id' => 'required|exists:authors,id',
+            'title' => 'required|string|max:255',
+            'isbn' => 'required|string|unique:books,isbn',
             'published_year' => 'required|integer|min:1000|max:' . date('Y'),
         ]);
 
@@ -42,9 +43,9 @@ class BookController extends Controller
     public function update(Request $request, Book $book)
     {
         $validator = Validator::make($request->all(), [
-            'author_id'      => 'sometimes|required|exists:authors,id',
-            'title'          => 'sometimes|required|string|max:255',
-            'isbn'           => 'sometimes|required|string|unique:books,isbn,' . $book->id,
+            'author_id' => 'sometimes|required|exists:authors,id',
+            'title' => 'sometimes|required|string|max:255',
+            'isbn' => 'sometimes|required|string|unique:books,isbn,' . $book->id,
             'published_year' => 'sometimes|required|integer|min:1000|max:' . date('Y'),
         ]);
 
@@ -61,8 +62,11 @@ class BookController extends Controller
     {
         $book->delete();
 
-        return response()->json([
-            'message' => 'Book deleted successfully'
-        ], 200);
+        return response()->json(
+            [
+                'message' => 'Book deleted successfully',
+            ],
+            200,
+        );
     }
 }

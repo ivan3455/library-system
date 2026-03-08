@@ -33,7 +33,6 @@ export class BookFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Завантажуємо авторів для випадаючого списку
     this.authorService.getAuthors().subscribe(res => this.authors = res.data);
 
     this.bookId = Number(this.route.snapshot.paramMap.get('id'));

@@ -1,0 +1,25 @@
+<div class="card">
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h2>Authors List</h2>
+    <a routerLink="/authors/new" class="btn-add">Add New Author</a>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Biography</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let author of authors">
+        <td>{{ author.name }}</td>
+        <td>{{ author.bio }}</td>
+        <td>
+          <a [routerLink]="['/authors/edit', author.id]" class="btn-edit">Edit</a>
+          <button (click)="deleteAuthor(author.id)" class="btn-delete">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,24 @@
+<div class="card">
+  <h2>Books List</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>ISBN</th>
+        <th>Author</th>
+        <th>Year</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of books">
+  <td>{{ book.title }}</td>
+  <td>{{ book.isbn }}</td>
+  <td>{{ book.author?.name }}</td>
+  <td>{{ book.published_year }}</td>
+  <td>
+    <button (click)="deleteBook(book.id)" class="btn-delete">Delete</button>
+  </td>
+</tr>
+    </tbody>
+  </table>
+</div>

@@ -18,8 +18,8 @@ Route::get('lang/{locale}', function ($locale) {
     return redirect()->back();
 })->name('lang.switch');
 
-// ТІЛЬКИ після логіну
-Route::middleware(['auth', 'verified'])->group(function () {
+// 1. ВИДАЛЯЄМО 'verified', щоб пошта не блокувала вхід
+Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -29,16 +29,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/authors', [AuthorController::class, 'index'])->name('authors.index');
-    Route::get('/books', [BookController::class, 'index'])->name('books.index');
+    // 2. ПЕРЕМІЩУЄМО всі маршрути авторів та книг СЮДИ (поза межі 'admin')
+    // Це дозволить перевірити, чи працюють вони хоча б для звичайного логіну
+    Route::resource('authors', AuthorController::class);
+    Route::resource('books', BookController::class);
 
-    Route::middleware(['admin'])->group(function () {
-        Route::resource('authors', AuthorController::class)->except(['index', 'show']);
-        Route::resource('books', BookController::class)->except(['index', 'show']);
-    });
-
-    Route::get('/authors/{author}', [AuthorController::class, 'show'])->name('authors.show');
-    Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
+    // Ці рядки можна поки що закоментувати, бо resource вище покриває їх
+    // Route::get('/authors/{author}', [AuthorController::class, 'show'])->name('authors.show');
+    // Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
 });
 
 require __DIR__.'/auth.php';

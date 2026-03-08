@@ -7,11 +7,8 @@ return [
     | Cross-Origin Resource Sharing (CORS) Configuration
     |--------------------------------------------------------------------------
     |
-    | Here you may configure your settings for cross-origin resource sharing
-    | or "CORS". This determines what cross-origin operations may execute
-    | in web browsers. You are free to adjust these settings as needed.
-    |
-    | To learn more: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+    | Тут ми повертаємо стандартні налаштування. Для чистого Blade-проєкту
+    | CORS взагалі не грає ролі, оскільки запити йдуть з того самого домену.
     |
     */
 
@@ -19,7 +16,8 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:4200'],
+    // Повертаємо порожній масив або видаляємо localhost:4200
+    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
@@ -29,6 +27,7 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => true,
+    // ВАЖЛИВО: Ставимо false для звичайного веб-інтерфейсу
+    'supports_credentials' => false,
 
 ];

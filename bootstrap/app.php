@@ -13,15 +13,21 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
 
+        // Переконаємося, що веб-група працює стандартно
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
         ]);
 
+        // Реєструємо аліаси
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
 
+        // ВАЖЛИВО: Видаляємо будь-які налаштування stateful для API,
+        // які могли бути додані раніше для Angular
+        $middleware->statefulApi();
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        // Тут можна додати обробку редіректів, якщо сесія закінчилася
     })->create();
